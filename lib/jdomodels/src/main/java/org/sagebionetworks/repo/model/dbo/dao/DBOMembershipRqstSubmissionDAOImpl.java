@@ -112,6 +112,9 @@ public class DBOMembershipRqstSubmissionDAOImpl implements MembershipRqstSubmiss
 			"DELETE FROM "+TABLE_MEMBERSHIP_REQUEST_SUBMISSION
 			+" WHERE "+COL_MEMBERSHIP_REQUEST_SUBMISSION_TEAM_ID+"=:"+COL_MEMBERSHIP_REQUEST_SUBMISSION_TEAM_ID
 			+" AND "+COL_MEMBERSHIP_REQUEST_SUBMISSION_USER_ID+"=:"+COL_MEMBERSHIP_REQUEST_SUBMISSION_USER_ID;
+	
+	private static final String SELECT_OPEN_REQUESTS_REQUESTER_ID_BY_TEAM =
+			"SELECT mrs." + COL_MEMBERSHIP_REQUEST_SUBMISSION_USER_ID + SELECT_OPEN_REQUESTS_BY_TEAM_CORE;
 
 	
 	/* (non-Javadoc)
@@ -268,7 +271,6 @@ public class DBOMembershipRqstSubmissionDAOImpl implements MembershipRqstSubmiss
 		return namedJdbcTemplate.queryForObject(SELECT_OPEN_REQUESTS_BY_REQUESTER_COUNT, param, Long.class);
 	}
 
-
 	@WriteTransaction
 	@Override
 	public void deleteByTeamAndRequester(long teamId, long requesterId)
@@ -279,4 +281,11 @@ public class DBOMembershipRqstSubmissionDAOImpl implements MembershipRqstSubmiss
 		namedJdbcTemplate.update(DELETE_REQUESTS_BY_TEAM_AND_REQUESTER, param);
 	}
 
+	@Override
+	public List<String> getOpenRequesterIdByTeam(long teamId, long now) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue(COL_MEMBERSHIP_REQUEST_SUBMISSION_TEAM_ID, teamId);
+		param.addValue(COL_MEMBERSHIP_REQUEST_SUBMISSION_EXPIRES_ON, now);	
+		return namedJdbcTemplate.queryForList(SELECT_OPEN_REQUESTS_REQUESTER_ID_BY_TEAM , param, String.class);
+	}
 }

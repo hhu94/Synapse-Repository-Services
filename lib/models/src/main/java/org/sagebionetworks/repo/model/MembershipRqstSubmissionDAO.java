@@ -58,6 +58,16 @@ public interface MembershipRqstSubmissionDAO {
 	 * 
 	 */
 	public List<MembershipRequest> getOpenByTeamInRange(long teamId, long now, long limit, long offset) throws DatastoreException, NotFoundException;
+	
+	/**
+	 * Get the list of userIds of all the users who submitted MembershipRqstSubmissions to the given team
+	 * 
+	 * @param teamId
+	 * @return
+	 * @throws DatastoreException
+	 * @throws NotFoundException
+	 */
+	public List<String>getOpenRequesterIdByTeam(long teamId, long now) throws DatastoreException, NotFoundException;
 
 	/**
 	 * Get the open (unexpired and unfulfilled) MembershipRqstSubmissions received by the given team from a given requester
