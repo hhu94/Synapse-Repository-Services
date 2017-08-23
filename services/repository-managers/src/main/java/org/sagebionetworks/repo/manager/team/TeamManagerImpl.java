@@ -375,15 +375,7 @@ public class TeamManagerImpl implements TeamManager {
 		populateUpdateFields(userInfo, team, new Date());
 		// bind the team name to this principal
 		bindTeamName(team.getName(), Long.parseLong(team.getId()));
-		Team old = teamDAO.get(team.getId());
-		Team result = teamDAO.update(team);
-		if (old.getCanPublicJoin() == false && result.getCanPublicJoin() == true) {
-			// Accept all MembershipRequests
-			long teamIdAsLong = Long.parseLong(team.getId());
-			long now = new Date().getTime();
-			List<String> requesterIds = membershipRqstSubmissionDAO.getOpenRequesterIdByTeam(teamIdAsLong, now);
-		}
-		return result;
+		return teamDAO.update(team);
 	}
 
 	/* (non-Javadoc)

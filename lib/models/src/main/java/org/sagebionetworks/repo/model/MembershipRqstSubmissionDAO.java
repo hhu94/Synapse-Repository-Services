@@ -67,7 +67,7 @@ public interface MembershipRqstSubmissionDAO {
 	 * @throws DatastoreException
 	 * @throws NotFoundException
 	 */
-	public List<String>getOpenRequesterIdByTeam(long teamId, long now) throws DatastoreException, NotFoundException;
+	public List<String>getOpenRequesterIdsByTeam(long teamId, long now) throws DatastoreException, NotFoundException;
 
 	/**
 	 * Get the open (unexpired and unfulfilled) MembershipRqstSubmissions received by the given team from a given requester

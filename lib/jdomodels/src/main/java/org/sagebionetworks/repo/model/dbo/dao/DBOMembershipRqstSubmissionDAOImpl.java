@@ -282,7 +282,7 @@ public class DBOMembershipRqstSubmissionDAOImpl implements MembershipRqstSubmiss
 	}
 
 	@Override
-	public List<String> getOpenRequesterIdByTeam(long teamId, long now) {
+	public List<String> getOpenRequesterIdsByTeam(long teamId, long now) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue(COL_MEMBERSHIP_REQUEST_SUBMISSION_TEAM_ID, teamId);
 		param.addValue(COL_MEMBERSHIP_REQUEST_SUBMISSION_EXPIRES_ON, now);	
