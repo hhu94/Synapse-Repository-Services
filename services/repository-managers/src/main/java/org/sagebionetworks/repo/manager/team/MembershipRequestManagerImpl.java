@@ -199,7 +199,7 @@ public class MembershipRequestManagerImpl implements MembershipRequestManager {
 		results.setTotalNumberOfResults(count);
 		return results;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.sagebionetworks.repo.manager.team.MembershipRequestManager#getOpenByTeamAndRequestorInRange(java.lang.String, java.lang.String, long, long)
 	 */
@@ -263,13 +263,5 @@ public class MembershipRequestManagerImpl implements MembershipRequestManager {
 			result.setCount(membershipRqstSubmissionDAO.getOpenRequestByTeamsCount(teamIds, System.currentTimeMillis()));
 		}
 		return result;
-	}
-
-	@Override
-	public List<String> getOpenRequesterIdsByTeam(UserInfo userInfo, String teamId) {
-		if (!authorizationManager.canAccess(
-				userInfo, teamId, ObjectType.TEAM, ACCESS_TYPE.TEAM_MEMBERSHIP_UPDATE).getAuthorized()) 
-			throw new UnauthorizedException("Cannot retrieve membership requests.");
-		return membershipRqstSubmissionDAO.getOpenRequesterIdsByTeam(Long.parseLong(teamId), new Date().getTime());
 	}
 }

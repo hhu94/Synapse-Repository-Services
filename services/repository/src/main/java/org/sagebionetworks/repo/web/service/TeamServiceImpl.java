@@ -14,7 +14,6 @@ import org.sagebionetworks.repo.manager.NotificationManager;
 import org.sagebionetworks.repo.manager.UserManager;
 import org.sagebionetworks.repo.manager.UserProfileManager;
 import org.sagebionetworks.repo.manager.UserProfileManagerUtils;
-import org.sagebionetworks.repo.manager.team.MembershipRequestManager;
 import org.sagebionetworks.repo.manager.team.TeamManager;
 import org.sagebionetworks.repo.model.AccessControlList;
 import org.sagebionetworks.repo.model.Count;
@@ -52,8 +51,6 @@ public class TeamServiceImpl implements TeamService {
 	private NotificationManager notificationManager;
 	@Autowired
 	private UserProfileManager userProfileManager;
-	@Autowired
-	private MembershipRequestManager membershipRqstManager;
 	
 	public TeamServiceImpl() {}
 	
@@ -213,18 +210,7 @@ public class TeamServiceImpl implements TeamService {
 	public Team update(Long userId, Team team) throws DatastoreException,
 			UnauthorizedException, NotFoundException, InvalidModelException {
 		UserInfo userInfo = userManager.getUserInfo(userId);
-		String teamId = team.getId();
-		Team old = teamManager.get(teamId);
-		Team result = teamManager.put(userInfo, team);
-		if (old.getCanPublicJoin() == false && result.getCanPublicJoin() == true) {
-			// Accept all open membership requests
-			long teamIdAsLong = Long.parseLong(team.getId());
-			List<String> requesterIds = membershipRqstManager.getOpenRequesterIdsByTeam(userInfo, teamId);
-			for (String requesterId : requesterIds) {
-				addMemberIntern(userId, teamId, requesterId, null, null);
-			}
-		}
-		return result;
+		return teamManager.put(userInfo, team);
 	}
 
 	/* (non-Javadoc)

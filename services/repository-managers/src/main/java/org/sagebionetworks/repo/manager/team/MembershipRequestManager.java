@@ -117,12 +117,4 @@ public interface MembershipRequestManager {
 	 */
 	public Count getOpenSubmissionsCountForTeamAdmin(UserInfo userInfo);
 
-	/**
-	 * Retrieve the user IDs of the requesters of all open request submissions for a team.
-	 * 
-	 * @param userInfo
-	 * @param teamId
-	 * @return
-	 */
-	public List<String> getOpenRequesterIdsByTeam(UserInfo userInfo, String teamId);
 }

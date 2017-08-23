@@ -224,26 +224,5 @@ public class DBOMembershipRqstSubmissionDAOImplTest {
 		// now we did!
 		assertEquals(0, membershipRqstSubmissionDAO.getOpenByTeamAndRequesterCount(teamId, pgLong, expiresOn.getTime()-1000L));
 	}
-	
-	@Test
-	public void testGetOpenRequesterIdByTeam() {
-		UserGroup user1 = individUser;
-		UserGroup user2 = new UserGroup();
-		user2.setIsIndividual(true);
-		user2.setId(userGroupDAO.create(user2).toString());
 
-		MembershipRqstSubmission mrs1 = membershipRqstSubmissionDAO.create(mrs);
-		MembershipRqstSubmission mrs2 = new MembershipRqstSubmission();
-		mrs2.setCreatedOn(new Date());
-		mrs2.setExpiresOn(null);
-		mrs2.setMessage("Please join the team");
-		mrs2.setTeamId(team.getId());
-		mrs2.setUserId(user2.getId());
-		mrs2 = membershipRqstSubmissionDAO.create(mrs2);
-		
-		Long teamId = Long.parseLong(team.getId());
-		List<String> expected = Arrays.asList(user1.getId(), user2.getId());
-		List<String> actual = membershipRqstSubmissionDAO.getOpenRequesterIdByTeam(teamId, new Date().getTime());
-		assertEquals(expected, actual);
-	}
 }
