@@ -10,7 +10,7 @@
     "membershipInvtnSignedToken": {
       "type": "object",
       "description": "Signed token containing the information needed to retrieve a membership invitation.",
-      "$ref": "org.sagebionetworks.repo.model.MembershipInvtnSignedToken"
+      "$ref": "org.sagebionetworks.repo.model.team.MembershipInvtnSignedToken"
     }
   }
 }

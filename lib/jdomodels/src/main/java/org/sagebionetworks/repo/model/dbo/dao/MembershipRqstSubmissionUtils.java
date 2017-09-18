@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import org.sagebionetworks.repo.model.DatastoreException;
-import org.sagebionetworks.repo.model.MembershipRqstSubmission;
+import org.sagebionetworks.repo.model.team.MembershipRqstSubmission;
 import org.sagebionetworks.repo.model.dbo.persistence.DBOMembershipRqstSubmission;
 import org.sagebionetworks.repo.model.jdo.JDOSecondaryPropertyUtils;
 

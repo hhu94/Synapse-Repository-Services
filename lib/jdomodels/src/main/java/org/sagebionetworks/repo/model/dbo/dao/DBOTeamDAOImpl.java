@@ -37,9 +37,9 @@ import org.sagebionetworks.repo.model.DatastoreException;
 import org.sagebionetworks.repo.model.InvalidModelException;
 import org.sagebionetworks.repo.model.ListWrapper;
 import org.sagebionetworks.repo.model.ObjectType;
-import org.sagebionetworks.repo.model.Team;
-import org.sagebionetworks.repo.model.TeamDAO;
-import org.sagebionetworks.repo.model.TeamMember;
+import org.sagebionetworks.repo.model.team.Team;
+import org.sagebionetworks.repo.model.team.TeamDAO;
+import org.sagebionetworks.repo.model.team.TeamMember;
 import org.sagebionetworks.repo.model.UserGroupHeader;
 import org.sagebionetworks.repo.model.dbo.DBOBasicDao;
 import org.sagebionetworks.repo.model.dbo.persistence.DBOTeam;
@@ -262,7 +262,7 @@ public class DBOTeamDAOImpl implements TeamDAO {
 	};
 	
 	/* (non-Javadoc)
-	 * @see org.sagebionetworks.repo.model.TeamDAO#create(org.sagebionetworks.repo.model.Team)
+	 * @see org.sagebionetworks.repo.model.team.TeamDAO#create(org.sagebionetworks.repo.model.team.Team)
 	 */
 	@WriteTransaction
 	@Override
@@ -279,7 +279,7 @@ public class DBOTeamDAOImpl implements TeamDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sagebionetworks.repo.model.TeamDAO#get(java.lang.String)
+	 * @see org.sagebionetworks.repo.model.team.TeamDAO#get(java.lang.String)
 	 */
 	@Override
 	public Team get(String id) throws DatastoreException, NotFoundException {
@@ -318,7 +318,7 @@ public class DBOTeamDAOImpl implements TeamDAO {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.sagebionetworks.repo.model.TeamDAO#getInRange(long, long)
+	 * @see org.sagebionetworks.repo.model.team.TeamDAO#getInRange(long, long)
 	 */
 	@Override
 	public List<Team> getInRange(long limit, long offset)
@@ -339,7 +339,7 @@ public class DBOTeamDAOImpl implements TeamDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sagebionetworks.repo.model.TeamDAO#getForMemberInRange(java.lang.String, long, long)
+	 * @see org.sagebionetworks.repo.model.team.TeamDAO#getForMemberInRange(java.lang.String, long, long)
 	 */
 	@Override
 	public List<Team> getForMemberInRange(String principalId,
@@ -363,7 +363,7 @@ public class DBOTeamDAOImpl implements TeamDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sagebionetworks.repo.model.TeamDAO#update(org.sagebionetworks.repo.model.Team)
+	 * @see org.sagebionetworks.repo.model.team.TeamDAO#update(org.sagebionetworks.repo.model.team.Team)
 	 */
 	@WriteTransaction
 	@Override
@@ -406,7 +406,7 @@ public class DBOTeamDAOImpl implements TeamDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sagebionetworks.repo.model.TeamDAO#delete(java.lang.String)
+	 * @see org.sagebionetworks.repo.model.team.TeamDAO#delete(java.lang.String)
 	 */
 	@WriteTransaction
 	@Override

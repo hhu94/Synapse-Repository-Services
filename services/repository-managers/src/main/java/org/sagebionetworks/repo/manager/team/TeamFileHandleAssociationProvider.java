@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.sagebionetworks.repo.model.ObjectType;
-import org.sagebionetworks.repo.model.Team;
-import org.sagebionetworks.repo.model.TeamDAO;
+import org.sagebionetworks.repo.model.team.Team;
+import org.sagebionetworks.repo.model.team.TeamDAO;
 import org.sagebionetworks.repo.model.file.FileHandleAssociationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 

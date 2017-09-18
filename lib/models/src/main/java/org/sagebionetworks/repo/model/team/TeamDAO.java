@@ -1,10 +1,16 @@
-package org.sagebionetworks.repo.model;
+package org.sagebionetworks.repo.model.team;
+
+import org.sagebionetworks.repo.model.ConflictingUpdateException;
+import org.sagebionetworks.repo.model.DatastoreException;
+import org.sagebionetworks.repo.model.InvalidModelException;
+import org.sagebionetworks.repo.model.ListWrapper;
+import org.sagebionetworks.repo.model.team.Team;
+import org.sagebionetworks.repo.model.team.TeamMember;
+import org.sagebionetworks.repo.web.NotFoundException;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import org.sagebionetworks.repo.web.NotFoundException;
 
 public interface TeamDAO {
 	/**

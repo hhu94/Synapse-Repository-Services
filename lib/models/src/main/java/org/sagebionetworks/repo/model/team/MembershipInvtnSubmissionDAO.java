@@ -1,7 +1,11 @@
-package org.sagebionetworks.repo.model;
+package org.sagebionetworks.repo.model.team;
 
 import java.util.List;
 
+import org.sagebionetworks.repo.model.DatastoreException;
+import org.sagebionetworks.repo.model.InvalidModelException;
+import org.sagebionetworks.repo.model.team.MembershipInvitation;
+import org.sagebionetworks.repo.model.team.MembershipInvtnSubmission;
 import org.sagebionetworks.repo.web.NotFoundException;
 
 public interface MembershipInvtnSubmissionDAO {

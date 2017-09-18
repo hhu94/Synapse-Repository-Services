@@ -27,9 +27,9 @@ import org.sagebionetworks.ids.IdType;
 import org.sagebionetworks.repo.model.DatastoreException;
 import org.sagebionetworks.repo.model.GroupMembersDAO;
 import org.sagebionetworks.repo.model.InvalidModelException;
-import org.sagebionetworks.repo.model.MembershipInvitation;
-import org.sagebionetworks.repo.model.MembershipInvtnSubmission;
-import org.sagebionetworks.repo.model.MembershipInvtnSubmissionDAO;
+import org.sagebionetworks.repo.model.team.MembershipInvitation;
+import org.sagebionetworks.repo.model.team.MembershipInvtnSubmission;
+import org.sagebionetworks.repo.model.team.MembershipInvtnSubmissionDAO;
 import org.sagebionetworks.repo.model.dbo.DBOBasicDao;
 import org.sagebionetworks.repo.model.dbo.persistence.DBOMembershipInvtnSubmission;
 import org.sagebionetworks.repo.web.NotFoundException;
@@ -130,7 +130,7 @@ public class DBOMembershipInvtnSubmissionDAOImpl implements MembershipInvtnSubmi
 	
 
 	/* (non-Javadoc)
-	 * @see org.sagebionetworks.repo.model.MembershipInvtnSubmissionDAO#get(java.lang.String)
+	 * @see org.sagebionetworks.repo.model.team.MembershipInvtnSubmissionDAO#get(java.lang.String)
 	 */
 	@Override
 	public MembershipInvtnSubmission get(String id) throws DatastoreException, NotFoundException {
@@ -142,7 +142,7 @@ public class DBOMembershipInvtnSubmissionDAOImpl implements MembershipInvtnSubmi
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sagebionetworks.repo.model.MembershipInvtnSubmissionDAO#delete(java.lang.String)
+	 * @see org.sagebionetworks.repo.model.team.MembershipInvtnSubmissionDAO#delete(java.lang.String)
 	 */
 	@Override
 	public void delete(String id) throws DatastoreException, NotFoundException {

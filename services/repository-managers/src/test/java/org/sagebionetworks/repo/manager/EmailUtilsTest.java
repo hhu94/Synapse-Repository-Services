@@ -14,7 +14,7 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.sagebionetworks.repo.manager.team.EmailParseUtil;
-import org.sagebionetworks.repo.model.JoinTeamSignedToken;
+import org.sagebionetworks.repo.model.team.JoinTeamSignedToken;
 import org.sagebionetworks.repo.model.UserProfile;
 import org.sagebionetworks.repo.model.message.NotificationSettingsSignedToken;
 import org.sagebionetworks.repo.util.SignedTokenUtil;
