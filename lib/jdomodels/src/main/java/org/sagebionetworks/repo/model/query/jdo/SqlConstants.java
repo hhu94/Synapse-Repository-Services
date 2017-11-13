@@ -658,7 +658,7 @@ public class SqlConstants {
 	public static final String COL_NOTIFICATION_EMAIL_ALIAS_ID		= "ALIAS_ID";
 	
 	// MembershipInvitation Table
-	public static final String TABLE_MEMBERSHIP_INVITATION = "MEMBERSHIP_INVITATION_SUBMISSION";
+	public static final String TABLE_MEMBERSHIP_INVITATION = "MEMBERSHIP_INVITATION";
 	public static final String COL_MEMBERSHIP_INVITATION_ID = "ID";
 	public static final String COL_MEMBERSHIP_INVITATION_ETAG = "ETAG";
 	public static final String COL_MEMBERSHIP_INVITATION_CREATED_ON = "CREATED_ON";
