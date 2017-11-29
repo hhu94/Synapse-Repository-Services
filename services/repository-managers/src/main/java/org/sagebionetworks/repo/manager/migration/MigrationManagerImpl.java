@@ -15,7 +15,20 @@ import org.sagebionetworks.repo.model.dbo.DatabaseObject;
 import org.sagebionetworks.repo.model.dbo.MigratableDatabaseObject;
 import org.sagebionetworks.repo.model.dbo.migration.MigratableTableDAO;
 import org.sagebionetworks.repo.model.dbo.migration.MigratableTableTranslation;
-import org.sagebionetworks.repo.model.migration.*;
+import org.sagebionetworks.repo.model.migration.AsyncMigrationRangeChecksumRequest;
+import org.sagebionetworks.repo.model.migration.AsyncMigrationRowMetadataRequest;
+import org.sagebionetworks.repo.model.migration.AsyncMigrationTypeChecksumRequest;
+import org.sagebionetworks.repo.model.migration.AsyncMigrationTypeCountRequest;
+import org.sagebionetworks.repo.model.migration.AsyncMigrationTypeCountsRequest;
+import org.sagebionetworks.repo.model.migration.ListBucketProvider;
+import org.sagebionetworks.repo.model.migration.MigrationRangeChecksum;
+import org.sagebionetworks.repo.model.migration.MigrationType;
+import org.sagebionetworks.repo.model.migration.MigrationTypeChecksum;
+import org.sagebionetworks.repo.model.migration.MigrationTypeCount;
+import org.sagebionetworks.repo.model.migration.MigrationTypeCounts;
+import org.sagebionetworks.repo.model.migration.MigrationUtils;
+import org.sagebionetworks.repo.model.migration.RowMetadata;
+import org.sagebionetworks.repo.model.migration.RowMetadataResult;
 import org.sagebionetworks.repo.model.status.StatusEnum;
 import org.sagebionetworks.repo.transactions.WriteTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +137,7 @@ public class MigrationManagerImpl implements MigrationManager {
 		// Get the database object from the dao
 		MigratableDatabaseObject mdo = migratableTableDao.getObjectForType(type);
 		// Forward to the generic method
-		writeBackupBatch(mdo, type, rowIds, writer);
+		writeBackupBatch(mdo, rowIds, writer);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -137,7 +150,7 @@ public class MigrationManagerImpl implements MigrationManager {
 			public List<Long> call() throws Exception {
 				// Get the database object from the dao
 				MigratableDatabaseObject mdo = migratableTableDao.getObjectForType(type);
-				return createOrUpdateBatch(mdo, type, in);
+				return createOrUpdateBatch(mdo, in);
 			}
 		});
 	}
@@ -199,11 +212,10 @@ public class MigrationManagerImpl implements MigrationManager {
 	/**
 	 * The Generics version of the write to backup.
 	 * @param mdo
-	 * @param type
 	 * @param rowIds
-	 * @param out
+	 * @param writer
 	 */
-	protected <D extends DatabaseObject<D>, B> void writeBackupBatch(MigratableDatabaseObject<D, B> mdo, MigrationType type,
+	protected <D extends DatabaseObject<D>, B> void writeBackupBatch(MigratableDatabaseObject<D, B> mdo,
 			List<Long> rowIds, Writer writer) {
 		// Get all of the data from the DAO batched.
 		List<D> databaseList = getBackupDataBatched(mdo.getDatabaseObjectClass(), rowIds);
@@ -214,8 +226,8 @@ public class MigrationManagerImpl implements MigrationManager {
 			backupList.add(translator.createBackupFromDatabaseObject(dbo));
 		}
 		// Now write the backup list to the stream
-		// we use the table name as the Alias
-		String alias = mdo.getTableMapping().getTableName();
+		// we use the MigrationType's name as the Alias
+		String alias = mdo.getMigratableTableType().name();
 		// Now write the backup to the stream
 		BackupMarshalingUtils.writeBackupToWriter(backupList, alias, writer);
 	}
@@ -248,13 +260,11 @@ public class MigrationManagerImpl implements MigrationManager {
 	/**
 	 * The Generics version of the create/update batch.
 	 * @param mdo
-	 * @param type
-	 * @param batch
 	 * @param in
 	 */
-	private <D extends DatabaseObject<D>, B> List<Long> createOrUpdateBatch(MigratableDatabaseObject<D, B> mdo, MigrationType type, InputStream in){
-		// we use the table name as the Alias
-		String alias = mdo.getTableMapping().getTableName();
+	private <D extends DatabaseObject<D>, B> List<Long> createOrUpdateBatch(MigratableDatabaseObject<D, B> mdo, InputStream in){
+		// we use the MigrationType's name as the Alias
+		String alias = mdo.getMigratableTableType().name();
 		// Read the list from the stream
 		@SuppressWarnings("unchecked")
 		List<B> backupList = (List<B>) BackupMarshalingUtils.readBackupFromStream(mdo.getBackupClass(), alias, in);
@@ -268,7 +278,7 @@ public class MigrationManagerImpl implements MigrationManager {
 			// Now write the batch to the database
 			List<Long> results = migratableTableDao.createOrUpdateBatch(databaseList);
 			// Let listeners know about the change
-			fireCreateOrUpdateBatchEvent(type, databaseList);
+			fireCreateOrUpdateBatchEvent(mdo.getMigratableTableType(), databaseList);
 			return results;
 		}else{
 			return new LinkedList<Long>();
